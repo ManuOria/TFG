@@ -1,4 +1,7 @@
 # test.py
+#
+# original source from Google:
+# https://github.com/tensorflow/models/blob/master/research/object_detection/test.py
 
 import numpy as np
 import os
@@ -89,7 +92,8 @@ def main():
                                                                    category_index,
                                                                    use_normalized_coordinates=True,
                                                                    line_thickness=8)
-                cv2.imwrite("waka.jpg", image_np)
+                
+                cv2.imwrite(os.path.join(config.RESULTS_LOC ,(imageFileName, image_np)))
                 cv2.waitKey()
             # end for
         # end with
@@ -102,7 +106,9 @@ def checkIfNecessaryPathsAndFilesExist():
         print('ERROR: TEST_IMAGE_DIR "' + config.TEST_IMAGE_DIR + '" does not seem to exist')
         return False
     # end if
-
+    if not os.path.exists(config.RESULTS_LOC):
+            os.makedirs(config.RESULTS_LOC)
+            print("Directory Created")
     # ToDo: check here that the test image directory contains at least one image
 
     if not os.path.exists(config.FROZEN_INFERENCE_GRAPH_LOC):
