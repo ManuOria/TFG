@@ -65,3 +65,5 @@ OUTPUT_DIR = os.getcwd() + "/" + "inference_graph"
 TEST_IMAGE_DIR = os.getcwd() +  "/test_images"
 FROZEN_INFERENCE_GRAPH_LOC = os.getcwd() + "/inference_graph/frozen_inference_graph.pb"
 LABELS_LOC = os.getcwd() + "/" + "label_map.pbtxt"
+RESULTS_LOC = os.getcwd() + "/result_images"
+
