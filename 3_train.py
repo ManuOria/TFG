@@ -13,25 +13,9 @@ from object_detection.builders import dataset_builder
 from object_detection.builders import model_builder
 from object_detection.utils import config_util
 from object_detection.utils import dataset_util
+import config
 
 # module-level variables ##############################################################################################
-
-# this is the big (pipeline).config file that contains various directory locations and many tunable parameters
-PIPELINE_CONFIG_PATH = os.getcwd() + "/" + "ssd_inception_v2_coco.config"
-
-# verify this extracted directory exists,
-# also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
-MODEL_DIR = os.getcwd() + "/" + "ssd_inception_v2_coco_2018_01_28"
-
-# verify that your MODEL_DIR contains these files
-FILES_MODEL_DIR_MUST_CONTAIN = [ "checkpoint" ,
-                                 "frozen_inference_graph.pb",
-                                 "model.ckpt.data-00000-of-00001",
-                                 "model.ckpt.index",
-                                 "model.ckpt.meta"]
-
-# directory to save the checkpoints and training summaries
-TRAINING_DATA_DIR = os.getcwd() + "/training_data/"
 
 # number of clones to deploy per worker
 NUM_CLONES = 1
@@ -53,8 +37,8 @@ def main(_):
         return
     # end if
 
-    configs = config_util.get_configs_from_pipeline_file(PIPELINE_CONFIG_PATH)
-    tf.gfile.Copy(PIPELINE_CONFIG_PATH, os.path.join(TRAINING_DATA_DIR, 'pipeline.config'), overwrite=True)
+    configs = config_util.get_configs_from_pipeline_file(config.PIPELINE_CONFIG_PATH)
+    tf.gfile.Copy(config.PIPELINE_CONFIG_PATH, os.path.join(config.TRAINING_DATA_DIR, 'pipeline.config'), overwrite=True)
 
     model_config = configs['model']
     train_config = configs['train_config']
@@ -112,12 +96,12 @@ def main(_):
     # end if
 
     trainer.train(create_input_dict_fn, model_fn, train_config, master, task, NUM_CLONES, worker_replicas,
-                  CLONE_ON_CPU, ps_tasks, worker_job_name, is_chief, TRAINING_DATA_DIR)
+                  CLONE_ON_CPU, ps_tasks, worker_job_name, is_chief, config.TRAINING_DATA_DIR)
 
 #######################################################################################################################
 def checkIfNecessaryPathsAndFilesExist():
-    if not os.path.exists(PIPELINE_CONFIG_PATH):
-        print('ERROR: the big (pipeline).config file "' + PIPELINE_CONFIG_PATH + '" does not seem to exist')
+    if not os.path.exists(config.PIPELINE_CONFIG_PATH):
+        print('ERROR: the big (pipeline).config file "' + config.PIPELINE_CONFIG_PATH + '" does not seem to exist')
         return False
     # end if
 
@@ -126,23 +110,23 @@ def checkIfNecessaryPathsAndFilesExist():
                           "ssd_inception_v2_coco is recommended"
 
     # check if the model directory exists
-    if not os.path.exists(MODEL_DIR):
-        print('ERROR: the model directory "' + MODEL_DIR + '" does not seem to exist')
+    if not os.path.exists(config.MODEL_DIR):
+        print('ERROR: the model directory "' + config.MODEL_DIR + '" does not seem to exist')
         print(missingModelMessage)
         return False
     # end if
 
     # check if each of the files that should be in the model directory are there
-    for necessaryModelFileName in FILES_MODEL_DIR_MUST_CONTAIN:
-        if not os.path.exists(os.path.join(MODEL_DIR, necessaryModelFileName)):
-            print('ERROR: the model file "' + MODEL_DIR + "/" + necessaryModelFileName + '" does not seem to exist')
+    for necessaryModelFileName in config.FILES_MODEL_DIR_MUST_CONTAIN:
+        if not os.path.exists(os.path.join(config.MODEL_DIR, necessaryModelFileName)):
+            print('ERROR: the model file "' + config.MODEL_DIR + "/" + necessaryModelFileName + '" does not seem to exist')
             print(missingModelMessage)
             return False
         # end if
     # end for
 
-    if not os.path.exists(TRAINING_DATA_DIR):
-        print('ERROR: TRAINING_DATA_DIR "' + TRAINING_DATA_DIR + '" does not seem to exist')
+    if not os.path.exists(config.TRAINING_DATA_DIR):
+        print('ERROR: TRAINING_DATA_DIR "' + config.TRAINING_DATA_DIR + '" does not seem to exist')
         return False
     # end if
 
