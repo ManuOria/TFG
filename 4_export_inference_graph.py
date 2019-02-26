@@ -8,6 +8,7 @@ import tensorflow as tf
 from google.protobuf import text_format
 from object_detection import exporter
 from object_detection.protos import pipeline_pb2
+import config
 
 # module-level variables ##############################################################################################
 
@@ -18,16 +19,6 @@ INPUT_TYPE = "image_tensor"
 # The dimensions are to be provided as a comma-separated list of integers. A value of -1 can be used for unknown dimensions.
 # If not specified, for an image_tensor, the default shape will be partially specified as [None, None, None, 3]
 INPUT_SHAPE = None
-
-# the location of the big config file
-PIPELINE_CONFIG_LOC =  os.getcwd() + "/" + "ssd_inception_v2_coco.config"
-
-# the final checkpoint result of the training process
-TRAINED_CHECKPOINT_PREFIX_LOC = os.getcwd() + "/training_data/model.ckpt-20"
-
-# the output directory to place the inference graph data, note that it's ok if this directory does not already exist
-# because the call to export_inference_graph() below will create this directory if it does not exist already
-OUTPUT_DIR = os.getcwd() + "/" + "inference_graph"
 
 #######################################################################################################################
 def main(_):
@@ -40,8 +31,8 @@ def main(_):
     print("calling TrainEvalPipelineConfig() . . .")
     trainEvalPipelineConfig = pipeline_pb2.TrainEvalPipelineConfig()
 
-    print("checking and merging " + os.path.basename(PIPELINE_CONFIG_LOC) + " into trainEvalPipelineConfig . . .")
-    with tf.gfile.GFile(PIPELINE_CONFIG_LOC, 'r') as f:
+    print("checking and merging " + os.path.basename(config.PIPELINE_CONFIG_LOC) + " into trainEvalPipelineConfig . . .")
+    with tf.gfile.GFile(config.PIPELINE_CONFIG_LOC, 'r') as f:
         text_format.Merge(f.read(), trainEvalPipelineConfig)
     # end with
 
@@ -53,15 +44,15 @@ def main(_):
     # end if
 
     print("calling export_inference_graph() . . .")
-    exporter.export_inference_graph(INPUT_TYPE, trainEvalPipelineConfig, TRAINED_CHECKPOINT_PREFIX_LOC, OUTPUT_DIR, input_shape)
+    exporter.export_inference_graph(INPUT_TYPE, trainEvalPipelineConfig, config.TRAINED_CHECKPOINT_PREFIX_LOC, config.OUTPUT_DIR, input_shape)
 
     print("done !!")
 # end main
 
 #######################################################################################################################
 def checkIfNecessaryPathsAndFilesExist():
-    if not os.path.exists(PIPELINE_CONFIG_LOC):
-        print('ERROR: PIPELINE_CONFIG_LOC "' + PIPELINE_CONFIG_LOC + '" does not seem to exist')
+    if not os.path.exists(config.PIPELINE_CONFIG_LOC):
+        print('ERROR: PIPELINE_CONFIG_LOC "' + config.PIPELINE_CONFIG_LOC + '" does not seem to exist')
         return False
     # end if
 
@@ -76,7 +67,7 @@ def checkIfNecessaryPathsAndFilesExist():
     # in the stated directory that START with the stated name
 
     # break out the directory location and the file prefix
-    trainedCkptPrefixPath, filePrefix = os.path.split(TRAINED_CHECKPOINT_PREFIX_LOC)
+    trainedCkptPrefixPath, filePrefix = os.path.split(config.TRAINED_CHECKPOINT_PREFIX_LOC)
 
     # return false if the directory does not exist
     if not os.path.exists(trainedCkptPrefixPath):
