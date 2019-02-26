@@ -11,20 +11,7 @@ import tensorflow as tf
 from PIL import Image
 from object_detection.utils import dataset_util
 from collections import namedtuple
-
-# module-level variables ##############################################################################################
-
-# input training CSV file and training images directory
-TRAIN_CSV_FILE_LOC = os.getcwd() + "/training_data/" + "train_labels.csv"
-TRAIN_IMAGES_DIR = os.getcwd() + "/training_images"
-
-# input test CSV file and test images directory
-EVAL_CSV_FILE_LOC = os.getcwd() + "/training_data/" + "eval_labels.csv"
-TEST_IMAGES_DIR = os.getcwd() + "/test_images"
-
-# training and testing output .tfrecord files
-TRAIN_TFRECORD_FILE_LOC = os.getcwd() + "/training_data/" + "train.tfrecord"
-EVAL_TFRECORD_FILE_LOC = os.getcwd() + "/training_data/" + "eval.tfrecord"
+import config
 
 #######################################################################################################################
 def main():
@@ -33,15 +20,15 @@ def main():
     # end if
 
     # write the train data .tfrecord file
-    trainTfRecordFileWriteSuccessful = writeTfRecordFile(TRAIN_CSV_FILE_LOC, TRAIN_TFRECORD_FILE_LOC, TRAIN_IMAGES_DIR)
+    trainTfRecordFileWriteSuccessful = writeTfRecordFile(config.TRAIN_CSV_FILE_LOC, config.TRAIN_TFRECORD_FILE_LOC, config.TRAIN_IMAGES_DIR)
     if trainTfRecordFileWriteSuccessful:
-        print("successfully created the training TFRectrds, saved to: " + TRAIN_TFRECORD_FILE_LOC)
+        print("successfully created the training TFRectrds, saved to: " + config.TRAIN_TFRECORD_FILE_LOC)
     # end if
 
     # write the eval data .tfrecord file
-    evalTfRecordFileWriteSuccessful = writeTfRecordFile(EVAL_CSV_FILE_LOC, EVAL_TFRECORD_FILE_LOC, TEST_IMAGES_DIR)
+    evalTfRecordFileWriteSuccessful = writeTfRecordFile(config.EVAL_CSV_FILE_LOC, config.EVAL_TFRECORD_FILE_LOC, config.TEST_IMAGES_DIR)
     if evalTfRecordFileWriteSuccessful:
-        print("successfully created the eval TFRecords, saved to: " + EVAL_TFRECORD_FILE_LOC)
+        print("successfully created the eval TFRecords, saved to: " + config.EVAL_TFRECORD_FILE_LOC)
     # end if
 
 # end main
@@ -69,23 +56,23 @@ def writeTfRecordFile(csvFileName, tfRecordFileName, imagesDir):
 
 #######################################################################################################################
 def checkIfNecessaryPathsAndFilesExist():
-    if not os.path.exists(TRAIN_CSV_FILE_LOC):
-        print('ERROR: TRAIN_CSV_FILE "' + TRAIN_CSV_FILE_LOC + '" does not seem to exist')
+    if not os.path.exists(config.TRAIN_CSV_FILE_LOC):
+        print('ERROR: TRAIN_CSV_FILE "' + config.TRAIN_CSV_FILE_LOC + '" does not seem to exist')
         return False
     # end if
 
-    if not os.path.exists(TRAIN_IMAGES_DIR):
-        print('ERROR: TRAIN_IMAGES_DIR "' + TRAIN_IMAGES_DIR + '" does not seem to exist')
+    if not os.path.exists(config.TRAIN_IMAGES_DIR):
+        print('ERROR: TRAIN_IMAGES_DIR "' + config.TRAIN_IMAGES_DIR + '" does not seem to exist')
         return False
     # end if
 
-    if not os.path.exists(EVAL_CSV_FILE_LOC):
-        print('ERROR: TEST_CSV_FILE "' + EVAL_CSV_FILE_LOC + '" does not seem to exist')
+    if not os.path.exists(config.EVAL_CSV_FILE_LOC):
+        print('ERROR: TEST_CSV_FILE "' + config.EVAL_CSV_FILE_LOC + '" does not seem to exist')
         return False
     # end if
 
-    if not os.path.exists(TEST_IMAGES_DIR):
-        print('ERROR: TEST_IMAGES_DIR "' + TEST_IMAGES_DIR + '" does not seem to exist')
+    if not os.path.exists(config.TEST_IMAGES_DIR):
+        print('ERROR: TEST_IMAGES_DIR "' + config.TEST_IMAGES_DIR + '" does not seem to exist')
         return False
     # end if
 
