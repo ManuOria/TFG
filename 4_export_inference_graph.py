@@ -11,6 +11,19 @@ from object_detection.protos import pipeline_pb2
 import config
 
 # module-level variables ##############################################################################################
+# the final checkpoint result of the training process
+items = os.listdir(config.TRAINING_DATA_DIR)
+
+fileList = []
+for names in items:
+    if names.startswith("model"):
+        fileList.append(names)
+        
+print (fileList)
+print("Select the highest checkpoint, Example: model.ckpt-20: ")
+model = input()
+
+TRAINED_CHECKPOINT_PREFIX_LOC = os.getcwd() + "/training_data/" + model
 
 # INPUT_TYPE can be "image_tensor", "encoded_image_string_tensor", or "tf_example"
 INPUT_TYPE = "image_tensor"
@@ -44,7 +57,7 @@ def main(_):
     # end if
 
     print("calling export_inference_graph() . . .")
-    exporter.export_inference_graph(INPUT_TYPE, trainEvalPipelineConfig, config.TRAINED_CHECKPOINT_PREFIX_LOC, config.OUTPUT_DIR, input_shape)
+    exporter.export_inference_graph(INPUT_TYPE, trainEvalPipelineConfig, TRAINED_CHECKPOINT_PREFIX_LOC, config.OUTPUT_DIR, input_shape)
 
     print("done !!")
 # end main
@@ -67,7 +80,7 @@ def checkIfNecessaryPathsAndFilesExist():
     # in the stated directory that START with the stated name
 
     # break out the directory location and the file prefix
-    trainedCkptPrefixPath, filePrefix = os.path.split(config.TRAINED_CHECKPOINT_PREFIX_LOC)
+    trainedCkptPrefixPath, filePrefix = os.path.split(TRAINED_CHECKPOINT_PREFIX_LOC)
 
     # return false if the directory does not exist
     if not os.path.exists(trainedCkptPrefixPath):
