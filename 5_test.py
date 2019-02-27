@@ -19,7 +19,8 @@ NUM_CLASSES = 15
 #######################################################################################################################
 def main():
     print("starting program . . .")
-
+    n = 0
+    
     if not checkIfNecessaryPathsAndFilesExist():
         return
     # end if
@@ -49,9 +50,11 @@ def main():
     category_index = label_map_util.create_category_index(categories)
 
     imageFilePaths = []
+    imagesName = []
     for imageFileName in os.listdir(config.TEST_IMAGE_DIR):
         if imageFileName.endswith(".jpg"):
             imageFilePaths.append(config.TEST_IMAGE_DIR + "/" + imageFileName)
+            imagesName.append(imageFileName)
         # end if
     # end for
 
@@ -93,7 +96,8 @@ def main():
                                                                    use_normalized_coordinates=True,
                                                                    line_thickness=8)
                 
-                cv2.imwrite(os.path.join(config.RESULTS_LOC ,(imageFileName, image_np)))
+                cv2.imwrite(os.path.join(config.RESULTS_LOC ,imagesName[n] + ".jpg"), image_np)
+                n = n + 1
                 cv2.waitKey()
             # end for
         # end with
