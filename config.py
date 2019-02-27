@@ -54,9 +54,6 @@ TRAINING_DATA_DIR = os.getcwd() + "/training_data/"
 # the location of the big config file
 PIPELINE_CONFIG_LOC =  os.getcwd() + "/" + "ssd_inception_v2_coco.config"
 
-# the final checkpoint result of the training process
-TRAINED_CHECKPOINT_PREFIX_LOC = os.getcwd() + "/training_data/model.ckpt-20"
-
 # the output directory to place the inference graph data, note that it's ok if this directory does not already exist
 # because the call to export_inference_graph() below will create this directory if it does not exist already
 OUTPUT_DIR = os.getcwd() + "/" + "inference_graph"
@@ -66,4 +63,3 @@ TEST_IMAGE_DIR = os.getcwd() +  "/test_images"
 FROZEN_INFERENCE_GRAPH_LOC = os.getcwd() + "/inference_graph/frozen_inference_graph.pb"
 LABELS_LOC = os.getcwd() + "/" + "label_map.pbtxt"
 RESULTS_LOC = os.getcwd() + "/result_images"
-
