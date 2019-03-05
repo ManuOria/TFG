@@ -16,7 +16,11 @@ from object_detection.utils import dataset_util
 import config
 
 # module-level variables ##############################################################################################
-
+PIPELINE_CONFIG_PATH = os.getcwd() + "/" + config.MODEL + ".config"    
+# verify this extracted directory exists,
+# also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
+MODEL_DIR = os.getcwd() + "/" + config.MODEL + "_2018_01_28" 
+        
 # number of clones to deploy per worker
 NUM_CLONES = 1
 
@@ -37,8 +41,8 @@ def main(_):
         return
     # end if
 
-    configs = config_util.get_configs_from_pipeline_file(config.PIPELINE_CONFIG_PATH)
-    tf.gfile.Copy(config.PIPELINE_CONFIG_PATH, os.path.join(config.TRAINING_DATA_DIR, 'pipeline.config'), overwrite=True)
+    configs = config_util.get_configs_from_pipeline_file(PIPELINE_CONFIG_PATH)
+    tf.gfile.Copy(PIPELINE_CONFIG_PATH, os.path.join(config.TRAINING_DATA_DIR, 'pipeline.config'), overwrite=True)
 
     model_config = configs['model']
     train_config = configs['train_config']
@@ -100,8 +104,8 @@ def main(_):
 
 #######################################################################################################################
 def checkIfNecessaryPathsAndFilesExist():
-    if not os.path.exists(config.PIPELINE_CONFIG_PATH):
-        print('ERROR: the big (pipeline).config file "' + config.PIPELINE_CONFIG_PATH + '" does not seem to exist')
+    if not os.path.exists(PIPELINE_CONFIG_PATH):
+        print('ERROR: the big (pipeline).config file "' + PIPELINE_CONFIG_PATH + '" does not seem to exist')
         return False
     # end if
 
@@ -136,3 +140,4 @@ def checkIfNecessaryPathsAndFilesExist():
 #######################################################################################################################
 if __name__ == '__main__':
     tf.app.run()
+
