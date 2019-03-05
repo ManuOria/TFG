@@ -1,4 +1,4 @@
-# generate_tfrecords.py
+# 2_generate_tfrecords.py
 
 # Note: substantial portions of this code, expecially the create_tf_example() function, are credit to Dat Tran
 # see his website here: https://towardsdatascience.com/how-to-train-your-own-object-detector-with-tensorflows-object-detector-api-bec72ecfe1d9
@@ -165,28 +165,24 @@ def classAsTextToClassAsInt(classAsText):
         return 3
     elif classAsText == 'Ascaris lumbricoides':
         return 4
-    elif classAsText == 'Giardia cyst':
-        return 5
     elif classAsText == 'Uncinarias':
-        return 6
+        return 5
     elif classAsText == 'Diphyllobothrium latum':
-        return 7
+        return 6
     elif classAsText == 'Taenia':
-        return 8
+        return 7
     elif classAsText == 'Balantidium coli':
-        return 9
+        return 8
     elif classAsText == 'Hymenolepis nana':
-        return 10
+        return 9
     elif classAsText == 'Schistosoma mansoni':
-        return 11
-    elif classAsText == 'Ameba':
-        return 12
+        return 10
     elif classAsText == 'Enterobius vermicularis':
-        return 13
+        return 11
     elif classAsText == 'Amebas':
-        return 14
+        return 12
     elif classAsText == 'Giardia':
-        return 15
+        return 13
     else:
         print("error in class_text_to_int(), row_label could not be identified")
         return -1
