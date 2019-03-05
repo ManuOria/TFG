@@ -6,7 +6,10 @@ Created on Tue Feb 26 15:57:14 2019
 """
 import os
 
+
+MODEL = "faster_rcnn_resnet101_coco" ### Other model: rfcn_resnet101_coco
 ###################################################### 1.
+
 # train and test directories
 TRAINING_IMAGES_DIR = os.getcwd() + "/training_images/"
 
@@ -31,14 +34,6 @@ TRAIN_TFRECORD_FILE_LOC = os.getcwd() + "/training_data/" + "train.tfrecord"
 EVAL_TFRECORD_FILE_LOC = os.getcwd() + "/training_data/" + "eval.tfrecord"
 
 ########################################################## 3.
-
-# this is the big (pipeline).config file that contains various directory locations and many tunable parameters
-PIPELINE_CONFIG_PATH = os.getcwd() + "/" + "ssd_inception_v2_coco.config"
-
-# verify this extracted directory exists,
-# also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
-MODEL_DIR = os.getcwd() + "/" + "ssd_inception_v2_coco_2018_01_28"
-
 # verify that your MODEL_DIR contains these files
 FILES_MODEL_DIR_MUST_CONTAIN = [ "checkpoint" ,
                                  "frozen_inference_graph.pb",
@@ -50,9 +45,6 @@ FILES_MODEL_DIR_MUST_CONTAIN = [ "checkpoint" ,
 TRAINING_DATA_DIR = os.getcwd() + "/training_data/"
 
 ########################################################### 4.
-
-# the location of the big config file
-PIPELINE_CONFIG_LOC =  os.getcwd() + "/" + "ssd_inception_v2_coco.config"
 
 # the output directory to place the inference graph data, note that it's ok if this directory does not already exist
 # because the call to export_inference_graph() below will create this directory if it does not exist already
