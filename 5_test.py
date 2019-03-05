@@ -98,7 +98,6 @@ def main():
                 
                 cv2.imwrite(os.path.join(config.RESULTS_LOC ,imagesName[n] + ".jpg"), image_np)
                 n = n + 1
-                cv2.waitKey()
             # end for
         # end with
     # end with
