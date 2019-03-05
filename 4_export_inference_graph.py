@@ -4,6 +4,7 @@
 # https://github.com/tensorflow/models/blob/master/research/object_detection/export_inference_graph.py
 
 import os
+import re
 import tensorflow as tf
 from google.protobuf import text_format
 from object_detection import exporter
@@ -16,14 +17,19 @@ items = os.listdir(config.TRAINING_DATA_DIR)
 
 fileList = []
 for names in items:
-    if names.startswith("model"):
+    if names.endswith(".index"):
         fileList.append(names)
-        
-print (fileList)
-print("Select the highest checkpoint, Example: model.ckpt-20: ")
-model = input()
 
-TRAINED_CHECKPOINT_PREFIX_LOC = os.getcwd() + "/training_data/" + model
+number = []  
+i = 0
+for i in range(len(fileList)):
+    m = re.match('model.ckpt-([0-9]+).index', fileList[i])
+    select = m.group(1)
+    number.append(int(select))
+
+model = max(number)
+
+TRAINED_CHECKPOINT_PREFIX_LOC = os.getcwd() + "/training_data/model.ckpt-" + str(model)
 
 # INPUT_TYPE can be "image_tensor", "encoded_image_string_tensor", or "tf_example"
 INPUT_TYPE = "image_tensor"
@@ -44,8 +50,8 @@ def main(_):
     print("calling TrainEvalPipelineConfig() . . .")
     trainEvalPipelineConfig = pipeline_pb2.TrainEvalPipelineConfig()
 
-    print("checking and merging " + os.path.basename(config.PIPELINE_CONFIG_LOC) + " into trainEvalPipelineConfig . . .")
-    with tf.gfile.GFile(config.PIPELINE_CONFIG_LOC, 'r') as f:
+    print("checking and merging " + os.path.basename(config.PIPELINE_CONFIG_PATH) + " into trainEvalPipelineConfig . . .")
+    with tf.gfile.GFile(config.PIPELINE_CONFIG_PATH, 'r') as f:
         text_format.Merge(f.read(), trainEvalPipelineConfig)
     # end with
 
@@ -64,8 +70,8 @@ def main(_):
 
 #######################################################################################################################
 def checkIfNecessaryPathsAndFilesExist():
-    if not os.path.exists(config.PIPELINE_CONFIG_LOC):
-        print('ERROR: PIPELINE_CONFIG_LOC "' + config.PIPELINE_CONFIG_LOC + '" does not seem to exist')
+    if not os.path.exists(config.PIPELINE_CONFIG_PATH):
+        print('ERROR: PIPELINE_CONFIG_PATH "' + config.PIPELINE_CONFIG_PATH + '" does not seem to exist')
         return False
     # end if
 
