@@ -49,12 +49,6 @@ def main():
     trainCsvResults.to_csv(config.TRAIN_CSV_FILE_LOC, index=None)
     print("training xml to .csv conversion successful, saved result to " + config.TRAIN_CSV_FILE_LOC)
 
-    # convert test xml data to a single .csv file
-    print("converting xml test data . . .")
-    testCsvResults = xml_to_csv(config.TEST_IMAGES_DIR)
-    testCsvResults.to_csv(config.EVAL_CSV_FILE_LOC, index=None)
-    print("test xml to .csv conversion successful, saved result to " + config.EVAL_CSV_FILE_LOC)
-
 # end main
 
 #######################################################################################################################
@@ -99,29 +93,6 @@ def checkIfNecessaryPathsAndFilesExist():
         # note we do not return false here b/c this is a warning, not an error
     # end if
 
-    if not os.path.exists(config.TEST_IMAGES_DIR):
-        print('ERROR: TEST_IMAGES_DIR "' + config.TEST_IMAGES_DIR + '" does not seem to exist')
-        return False
-    # end if
-
-    # get a list of all the .jpg / .xml file pairs in the test images directory
-    testImagesWithAMatchingXmlFile = []
-    for fileName in os.listdir(config.TEST_IMAGES_DIR):
-        if fileName.endswith(".jpg"):
-            xmlFileName = os.path.splitext(fileName)[0] + ".xml"
-            if os.path.exists(os.path.join(config.TEST_IMAGES_DIR, xmlFileName)):
-                testImagesWithAMatchingXmlFile.append(fileName)
-            # end if
-        # end if
-    # end for
-
-    # show an error and return false if there are not at least 3 images and 3 matching XML files in TEST_IMAGES_DIR
-    if len(testImagesWithAMatchingXmlFile) <= MIN_NUM_IMAGES_REQUIRED_FOR_TESTING: #################### modificado
-        print("ERROR: there are not at least " + str(MIN_NUM_IMAGES_REQUIRED_FOR_TESTING) + " image / xml pairs in " + config.TEST_IMAGES_DIR)
-        print("Did you separate out the test image / xml pairs from the training image / xml pairs?")
-        return False
-    # end if
-
     return True
 # end function
 
@@ -146,4 +117,3 @@ def xml_to_csv(path):
 #######################################################################################################################
 if __name__ == "__main__":
     main()
-
