@@ -30,7 +30,6 @@ def main():
         parser = argparse.ArgumentParser(description='Delete Training and Inference Graph folders')
         parser.add_argument('-delete', action = "store_true", default = False, dest = 'boolean_switch', help = 'When call it deletes the folders')
         result = parser.parse_args()
-        print(result.boolean_switch)
         if(result.boolean_switch == True):
             if os.path.exists(config.TRAINING_DATA_DIR):
                 shutil.rmtree(config.TRAINING_DATA_DIR)
