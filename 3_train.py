@@ -7,20 +7,34 @@ import functools
 import json
 import os
 import tensorflow as tf
-
 from object_detection.legacy import trainer
 from object_detection.builders import dataset_builder
 from object_detection.builders import model_builder
 from object_detection.utils import config_util
 from object_detection.utils import dataset_util
 import config
+import argparse
 
-# module-level variables ##############################################################################################
-PIPELINE_CONFIG_PATH = os.getcwd() + "/" + config.MODEL + ".config"    
-# verify this extracted directory exists,
-# also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
-MODEL_DIR = os.getcwd() + "/" + config.MODEL + "_2018_01_28" 
-        
+
+parser = argparse.ArgumentParser(description='Select the model for training')
+parser.add_argument('-model', action = "store", default = False, dest = 'value', help = 'select between the different models for training, possible values: rfcn or rcnn')
+result = parser.parse_args()
+
+if(result.value == 'rfcn'):
+    MODEL = 'rfcn_resnet101_coco'
+    # module-level variables ##############################################################################################
+    PIPELINE_CONFIG_PATH = os.getcwd() + "/" + MODEL + ".config"    
+    # verify this extracted directory exists,
+    # also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
+    MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28" 
+if(result.value == 'rcnn'):
+    MODEL = 'faster_rcnn_resnet101_coco'
+    # module-level variables ##############################################################################################
+    PIPELINE_CONFIG_PATH = os.getcwd() + "/" + MODEL + ".config"    
+    # verify this extracted directory exists,
+    # also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
+    MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28" 
+    
 # number of clones to deploy per worker
 NUM_CLONES = 1
 
@@ -101,6 +115,8 @@ def main(_):
 
     trainer.train(create_input_dict_fn, model_fn, train_config, master, task, NUM_CLONES, worker_replicas,
                   CLONE_ON_CPU, ps_tasks, worker_job_name, is_chief, config.TRAINING_DATA_DIR)
+    
+    
 
 #######################################################################################################################
 def checkIfNecessaryPathsAndFilesExist():
@@ -114,16 +130,16 @@ def checkIfNecessaryPathsAndFilesExist():
                           "ssd_inception_v2_coco is recommended"
 
     # check if the model directory exists
-    if not os.path.exists(config.MODEL_DIR):
-        print('ERROR: the model directory "' + config.MODEL_DIR + '" does not seem to exist')
+    if not os.path.exists(MODEL_DIR):
+        print('ERROR: the model directory "' + MODEL_DIR + '" does not seem to exist')
         print(missingModelMessage)
         return False
     # end if
 
     # check if each of the files that should be in the model directory are there
     for necessaryModelFileName in config.FILES_MODEL_DIR_MUST_CONTAIN:
-        if not os.path.exists(os.path.join(config.MODEL_DIR, necessaryModelFileName)):
-            print('ERROR: the model file "' + config.MODEL_DIR + "/" + necessaryModelFileName + '" does not seem to exist')
+        if not os.path.exists(os.path.join(MODEL_DIR, necessaryModelFileName)):
+            print('ERROR: the model file "' + MODEL_DIR + "/" + necessaryModelFileName + '" does not seem to exist')
             print(missingModelMessage)
             return False
         # end if
@@ -140,4 +156,3 @@ def checkIfNecessaryPathsAndFilesExist():
 #######################################################################################################################
 if __name__ == '__main__':
     tf.app.run()
-
