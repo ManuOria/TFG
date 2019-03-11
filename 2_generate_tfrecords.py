@@ -20,7 +20,7 @@ def main():
     # end if
 
     # write the train data .tfrecord file
-    trainTfRecordFileWriteSuccessful = writeTfRecordFile(config.TRAIN_CSV_FILE_LOC, config.TRAIN_TFRECORD_FILE_LOC, config.TRAIN_IMAGES_DIR)
+    trainTfRecordFileWriteSuccessful = writeTfRecordFile(config.TRAIN_CSV_FILE_LOC, config.TRAIN_TFRECORD_FILE_LOC, config.TRAINING_IMAGES_DIR)
     if trainTfRecordFileWriteSuccessful:
         print("successfully created the training TFRectrds, saved to: " + config.TRAIN_TFRECORD_FILE_LOC)
     # end if
@@ -55,8 +55,8 @@ def checkIfNecessaryPathsAndFilesExist():
         return False
     # end if
 
-    if not os.path.exists(config.TRAIN_IMAGES_DIR):
-        print('ERROR: TRAIN_IMAGES_DIR "' + config.TRAIN_IMAGES_DIR + '" does not seem to exist')
+    if not os.path.exists(config.TRAINING_IMAGES_DIR):
+        print('ERROR: TRAINING_IMAGES_DIR "' + config.TRAINING_IMAGES_DIR + '" does not seem to exist')
         return False
     # end if
 
