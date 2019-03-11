@@ -10,6 +10,7 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 import config
 import shutil
+import argparse
 
 # module level variables ##############################################################################################
 
@@ -26,13 +27,18 @@ def main():
 
     # if the training data directory does not exist, create it
     try:
-        if os.path.exists(config.TRAINING_DATA_DIR):
-            shutil.rmtree(config.TRAINING_DATA_DIR)
-            print("Training Directory Deleted")
-            
-        if os.path.exists(config.OUTPUT_DIR):
-            shutil.rmtree(config.OUTPUT_DIR)
-            print("Inference Graph Deleted")
+        parser = argparse.ArgumentParser(description='Delete Training and Inference Graph folders')
+        parser.add_argument('-delete', action = "store_true", default = False, dest = 'boolean_switch', help = 'When call it deletes the folders')
+        result = parser.parse_args()
+        print(result.boolean_switch)
+        if(result.boolean_switch == True):
+            if os.path.exists(config.TRAINING_DATA_DIR):
+                shutil.rmtree(config.TRAINING_DATA_DIR)
+                print("Training Directory Deleted")
+                
+            if os.path.exists(config.OUTPUT_DIR):
+                shutil.rmtree(config.OUTPUT_DIR)
+                print("Inference Graph Deleted")
             
         if not os.path.exists(config.TRAINING_DATA_DIR):
             os.makedirs(config.TRAINING_DATA_DIR)
@@ -117,3 +123,4 @@ def xml_to_csv(path):
 #######################################################################################################################
 if __name__ == "__main__":
     main()
+
