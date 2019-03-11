@@ -1,4 +1,4 @@
-# test.py
+# 5_test.py
 #
 # original source from Google:
 # https://github.com/tensorflow/models/blob/master/research/object_detection/test.py
