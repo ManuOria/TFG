@@ -1,4 +1,4 @@
-# export_inference_graph.py
+# 4_export_inference_graph.py
 #
 # original file by Google:
 # https://github.com/tensorflow/models/blob/master/research/object_detection/export_inference_graph.py
