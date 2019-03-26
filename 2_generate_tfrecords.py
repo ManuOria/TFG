@@ -31,11 +31,13 @@ def main():
 def writeTfRecordFile(csvFileName, tfRecordFileName, imagesDir):
     # use pandas to read in the .csv file data, pandas.read_csv() returns a type DataFrame with the given param
     csvFileDataFrame = pd.read_csv(csvFileName)
-
+    # csvFileDataFrame is a two dimensional data structure with labeled axes
+    
     # reformat the CSV data into a format TensorFlow can work with
     csvFileDataList = reformatCsvFileData(csvFileDataFrame)
 
     # instantiate a TFRecordWriter for the file data
+    # is a class to write records
     tfRecordWriter = tf.python_io.TFRecordWriter(tfRecordFileName)
 
     # for each file (not each line) in the CSV file data . . .
@@ -83,6 +85,8 @@ def reformatCsvFileData(csvFileDataFrame):
     csvFileDataList = []
     for filename, x in zip(csvFileDataFrameGroupBy.groups.keys(), csvFileDataFrameGroupBy.groups):
         csvFileDataList.append(dataFormat(filename, csvFileDataFrameGroupBy.get_group(x)))
+        # obtain a list of the type: data(filename='IMG_20190212_154813_221.jpg', object=  filename                         width    height     ...    ymin    xmax    ymax
+        #                                                                                  599  IMG_20190212_154813_221.jpg    720    1184      ...     466     483       566
     # end for
     return csvFileDataList
 # end function
@@ -146,32 +150,31 @@ def classAsTextToClassAsInt(classAsText):
     # ToDo: If you have more than one classification, add an if statement for each
     # ToDo: i.e. if you have 3 classes, you would have 3 if statements and then the else
 
-    if classAsText == 'Artefacto': ############## modificado
+    
+    if classAsText == 'E.coli':
         return 1
-    elif classAsText == 'E.coli':
-        return 2
     elif classAsText == 'Trichuris trichura':
-        return 3
+        return 2
     elif classAsText == 'Ascaris lumbricoides':
-        return 4
+        return 3
     elif classAsText == 'Uncinarias':
-        return 5
+        return 4
     elif classAsText == 'Diphyllobothrium latum':
-        return 6
+        return 5
     elif classAsText == 'Taenia':
-        return 7
+        return 6
     elif classAsText == 'Balantidium coli':
-        return 8
+        return 7
     elif classAsText == 'Hymenolepis nana':
-        return 9
+        return 8
     elif classAsText == 'Schistosoma mansoni':
-        return 10
+        return 9
     elif classAsText == 'Enterobius vermicularis':
-        return 11
+        return 10
     elif classAsText == 'Amebas':
-        return 12
+        return 11
     elif classAsText == 'Giardia':
-        return 13
+        return 12
     else:
         print("error in class_text_to_int(), row_label could not be identified")
         return -1
