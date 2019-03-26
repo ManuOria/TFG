@@ -27,6 +27,7 @@ def main():
 
     # if the training data directory does not exist, create it
     try:
+        # argparse function for deleting de folders 
         parser = argparse.ArgumentParser(description='Delete Training and Inference Graph folders')
         parser.add_argument('-delete', action = "store_true", default = False, dest = 'boolean_switch', help = 'When call it deletes the folders')
         result = parser.parse_args()
@@ -41,7 +42,7 @@ def main():
             
         if not os.path.exists(config.TRAINING_DATA_DIR):
             os.makedirs(config.TRAINING_DATA_DIR)
-            print("Directory Created")
+            print("Training Directory Created")
         # end if
     except Exception as e:
         print("unable to create directory " + config.TRAINING_DATA_DIR + "error: " + str(e))
@@ -50,8 +51,10 @@ def main():
 
     # convert training xml data to a single .csv file
     print("converting xml training data . . .")
-    trainCsvResults = xml_to_csv(config.TRAINING_IMAGES_DIR)
-    trainCsvResults.to_csv(config.TRAIN_CSV_FILE_LOC, index=None)
+    #Call xml_to_csv function passing the training images directory as argument, the result is stored
+    trainCsvResults = xml_to_csv(config.TRAINING_IMAGES_DIR) 
+    #Write a csv file at the location passed, with the information of the xml files, because the encode the information we need
+    trainCsvResults.to_csv(config.TRAIN_CSV_FILE_LOC, index=None) 
     print("training xml to .csv conversion successful, saved result to " + config.TRAIN_CSV_FILE_LOC)
 
 # end main
@@ -67,10 +70,11 @@ def checkIfNecessaryPathsAndFilesExist():
     # end if
 
     # get a list of all the .jpg / .xml file pairs in the training images directory
+    # Only append those .jpg that have an associated .xml 
     trainingImagesWithAMatchingXmlFile = []
     for fileName in os.listdir(config.TRAINING_IMAGES_DIR):
-        if fileName.endswith(".jpg"):####### modificado
-            xmlFileName = os.path.splitext(fileName)[0] + ".xml" ########## modificado
+        if fileName.endswith(".jpg"):
+            xmlFileName = os.path.splitext(fileName)[0] + ".xml" 
             if os.path.exists(os.path.join(config.TRAINING_IMAGES_DIR, xmlFileName)):
                 trainingImagesWithAMatchingXmlFile.append(fileName)
             # end if
@@ -102,18 +106,23 @@ def checkIfNecessaryPathsAndFilesExist():
 # end function
 
 #######################################################################################################################
+# We pass the training images path
 def xml_to_csv(path):
     xml_list = []
-    for xml_file in glob.glob(path + '/*.xml'):
-        tree = ET.parse(xml_file)
+    #glob.glob(pathname) return a list of path names that match pathname = string containing a path
+    for xml_file in glob.glob(path + '/*.xml'): 
+        # represent the xml as a tree, and import the data
+        tree = ET.parse(xml_file)  
         root = tree.getroot()
-        for member in root.findall('object'):
+        # extracts first the filename and the size of the image, and then the values from the 'object' of the xml
+        for member in root.findall('object'): 
             value = (root.find('filename').text, int(root.find('size')[0].text), int(root.find('size')[1].text), member[0].text,
                      int(member[4][0].text), int(member[4][1].text), int(member[4][2].text), int(member[4][3].text))
+            # append this information
             xml_list.append(value)
         # end for
     # end for
-
+    # now we generate a two dimensional tabular data structure with labeled axes (the data)
     column_name = ['filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax']
     xml_df = pd.DataFrame(xml_list, columns=column_name)
     return xml_df
@@ -122,4 +131,3 @@ def xml_to_csv(path):
 #######################################################################################################################
 if __name__ == "__main__":
     main()
-
