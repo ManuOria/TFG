@@ -6,6 +6,10 @@ Created on Tue Feb 26 15:57:14 2019
 """
 import os
 
+MODEL = 'rfcn_resnet101_coco' ## 'faster_rcnn_resnet101_coco'
+PIPELINE_CONFIG_PATH = os.getcwd() + "/" + MODEL + ".config" 
+MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28" 
+
 ###################################################### 1.
 
 # train and test directories
