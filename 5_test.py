@@ -43,7 +43,7 @@ def main():
     # end with
 
     # Loading label map
-    # Label maps map indices to category names, so that when our convolution network predicts `5`, we know that this corresponds to `airplane`.  Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
+    # Label maps map indices to category names.  Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
     label_map = label_map_util.load_labelmap(config.LABELS_LOC)
     categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES,
                                                                 use_display_name=True)
@@ -96,7 +96,7 @@ def main():
                                                                    use_normalized_coordinates=True,
                                                                    line_thickness=8)
                 
-                cv2.imwrite(os.path.join(config.RESULTS_LOC ,imagesName[n] + ".jpg"), image_np)
+                cv2.imwrite(os.path.join(config.RESULTS_LOC ,imagesName[n]), image_np)
                 n = n + 1
             # end for
         # end with
