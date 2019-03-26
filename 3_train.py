@@ -16,24 +16,24 @@ import config
 import argparse
 
 
-parser = argparse.ArgumentParser(description='Select the model for training')
-parser.add_argument('-model', action = "store", default = False, dest = 'value', help = 'select between the different models for training, possible values: rfcn or rcnn')
-result = parser.parse_args()
-
-if(result.value == 'rfcn'):
-    MODEL = 'rfcn_resnet101_coco'
-    # module-level variables ##############################################################################################
-    PIPELINE_CONFIG_PATH = os.getcwd() + "/" + MODEL + ".config"    
-    # verify this extracted directory exists,
-    # also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
-    MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28" 
-if(result.value == 'rcnn'):
-    MODEL = 'faster_rcnn_resnet101_coco'
-    # module-level variables ##############################################################################################
-    PIPELINE_CONFIG_PATH = os.getcwd() + "/" + MODEL + ".config"    
-    # verify this extracted directory exists,
-    # also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
-    MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28" 
+#parser = argparse.ArgumentParser(description='Select the model for training')
+#parser.add_argument('-model', action = "store", default = False, dest = 'value', help = 'select between the different models for training, possible values: rfcn or rcnn')
+#result = parser.parse_args()
+#
+#if(result.value == 'rfcn'):
+#    MODEL = 'rfcn_resnet101_coco'
+#    # module-level variables ##############################################################################################
+#    PIPELINE_CONFIG_PATH = os.getcwd() + "/" + MODEL + ".config"    
+#    # verify this extracted directory exists,
+#    # also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
+#    MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28" 
+#if(result.value == 'rcnn'):
+#    MODEL = 'faster_rcnn_resnet101_coco'
+#    # module-level variables ##############################################################################################
+#    PIPELINE_CONFIG_PATH = os.getcwd() + "/" + MODEL + ".config"    
+#    # verify this extracted directory exists,
+#    # also verify it's the directory referred to by the 'fine_tune_checkpoint' parameter in your (pipeline).config file
+#    MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28" 
     
 # number of clones to deploy per worker
 NUM_CLONES = 1
@@ -54,14 +54,17 @@ def main(_):
     if not checkIfNecessaryPathsAndFilesExist():
         return
     # end if
-
-    configs = config_util.get_configs_from_pipeline_file(PIPELINE_CONFIG_PATH)
-    tf.gfile.Copy(PIPELINE_CONFIG_PATH, os.path.join(config.TRAINING_DATA_DIR, 'pipeline.config'), overwrite=True)
-
+    # take the model configuration
+    configs = config_util.get_configs_from_pipeline_file(config.PIPELINE_CONFIG_PATH)
+    # copy the name of the files in training data directory to pipeline.config
+    tf.gfile.Copy(config.PIPELINE_CONFIG_PATH, os.path.join(config.TRAINING_DATA_DIR, 'pipeline.config'), overwrite=True)
+    
+    # store different parts of the model configuration
     model_config = configs['model']
     train_config = configs['train_config']
     input_config = configs['train_input_config']
-
+    
+    # new partial object when called behave like the func model_builder
     model_fn = functools.partial(model_builder.build, model_config=model_config, is_training=True)
 
     # ToDo: this nested function seems odd, factor this out eventually ??
@@ -120,8 +123,8 @@ def main(_):
 
 #######################################################################################################################
 def checkIfNecessaryPathsAndFilesExist():
-    if not os.path.exists(PIPELINE_CONFIG_PATH):
-        print('ERROR: the big (pipeline).config file "' + PIPELINE_CONFIG_PATH + '" does not seem to exist')
+    if not os.path.exists(config.PIPELINE_CONFIG_PATH):
+        print('ERROR: the big (pipeline).config file "' + config.PIPELINE_CONFIG_PATH + '" does not seem to exist')
         return False
     # end if
 
@@ -130,16 +133,16 @@ def checkIfNecessaryPathsAndFilesExist():
                           "ssd_inception_v2_coco is recommended"
 
     # check if the model directory exists
-    if not os.path.exists(MODEL_DIR):
-        print('ERROR: the model directory "' + MODEL_DIR + '" does not seem to exist')
+    if not os.path.exists(config.MODEL_DIR):
+        print('ERROR: the model directory "' + config.MODEL_DIR + '" does not seem to exist')
         print(missingModelMessage)
         return False
     # end if
 
     # check if each of the files that should be in the model directory are there
     for necessaryModelFileName in config.FILES_MODEL_DIR_MUST_CONTAIN:
-        if not os.path.exists(os.path.join(MODEL_DIR, necessaryModelFileName)):
-            print('ERROR: the model file "' + MODEL_DIR + "/" + necessaryModelFileName + '" does not seem to exist')
+        if not os.path.exists(os.path.join(config.MODEL_DIR, necessaryModelFileName)):
+            print('ERROR: the model file "' + config.MODEL_DIR + "/" + necessaryModelFileName + '" does not seem to exist')
             print(missingModelMessage)
             return False
         # end if
@@ -156,3 +159,4 @@ def checkIfNecessaryPathsAndFilesExist():
 #######################################################################################################################
 if __name__ == '__main__':
     tf.app.run()
+
