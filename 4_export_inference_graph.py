@@ -77,7 +77,7 @@ def checkIfNecessaryPathsAndFilesExist():
 
     # TRAINED_CHECKPOINT_PREFIX_LOC is a special case because there is no actual file with this name.
     # i.e. if TRAINED_CHECKPOINT_PREFIX_LOC is:
-    # "C:\Users\cdahms\Documents\TensorFlow_Tut_3_Object_Detection_Walk-through\training_data\training_data\model.ckpt-500"
+    # "~\training_data\model.ckpt-500"
     # this exact file does not exist, but there should be 3 files including this name, which would be:
     # "model.ckpt-500.data-00000-of-00001"
     # "model.ckpt-500.index"
