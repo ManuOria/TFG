@@ -78,6 +78,7 @@ def main():
             if jpg[i] == X_test[j]:
                 try:
                     shutil.move(GLOBAL_IMAGES_PATH_COPY + jpg[i], TEST_PATH)
+                    shutil.move(GLOBAL_IMAGES_PATH_COPY + os.path.splitext(jpg[i])[0] + ".xml", TEST_PATH)
                 except OSError:
                     pass
     print('Test images have been copied into the test images folder')
