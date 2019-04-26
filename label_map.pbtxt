@@ -1,59 +1,54 @@
 item {
   id: 1
-  name: 'E.coli'
-}
-
-item {
-  id: 2
   name: 'Trichuris trichura'
 }
 
 item {
-  id: 3
+  id: 2
   name: 'Ascaris lumbricoides'
 }
 
 item {
-  id: 4
+  id: 3
   name: 'Uncinarias'
 }
 
 item {
-  id: 5
+  id: 4
   name: 'Diphyllobothrium latum'
 }
 
 item {
-  id: 6
+  id: 5
   name: 'Taenia'
 }
 
 item {
-  id: 7
+  id: 6
   name: 'Balantidium coli'
 }
 
 item {
-  id: 8
+  id: 7
   name: 'Hymenolepis nana'
 }
 
 item {
-  id: 9
+  id: 8
   name: 'Schistosoma mansoni'
 }
 
 item {
-  id: 10
+  id: 9
   name: 'Enterobius vermicularis'
 }
 
 item {
-  id: 11
+  id: 10
   name: 'Amebas'
 }
 
 item {
-  id: 12
+  id: 11
   name: 'Giardia'
 }
