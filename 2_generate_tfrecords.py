@@ -151,30 +151,28 @@ def classAsTextToClassAsInt(classAsText):
     # ToDo: i.e. if you have 3 classes, you would have 3 if statements and then the else
 
     
-    if classAsText == 'E.coli':
+    if classAsText == 'Trichuris trichura':
         return 1
-    elif classAsText == 'Trichuris trichura':
-        return 2
     elif classAsText == 'Ascaris lumbricoides':
-        return 3
+        return 2
     elif classAsText == 'Uncinarias':
-        return 4
+        return 3
     elif classAsText == 'Diphyllobothrium latum':
-        return 5
+        return 4
     elif classAsText == 'Taenia':
-        return 6
+        return 5
     elif classAsText == 'Balantidium coli':
-        return 7
+        return 6
     elif classAsText == 'Hymenolepis nana':
-        return 8
+        return 7
     elif classAsText == 'Schistosoma mansoni':
-        return 9
+        return 8
     elif classAsText == 'Enterobius vermicularis':
-        return 10
+        return 9
     elif classAsText == 'Amebas':
-        return 11
+        return 10
     elif classAsText == 'Giardia':
-        return 12
+        return 11
     else:
         print("error in class_text_to_int(), row_label could not be identified")
         return -1
