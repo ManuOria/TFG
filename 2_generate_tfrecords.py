@@ -157,7 +157,7 @@ def classAsTextToClassAsInt(classAsText):
         return 2
     elif classAsText == 'Uncinarias':
         return 3
-    elif classAsText == 'Diphyllobothrium latum':
+    elif classAsText == 'Diphyllobotrium latum':
         return 4
     elif classAsText == 'Taenia':
         return 5
