@@ -15,16 +15,18 @@ MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28"
 # train and test directories
 TRAINING_IMAGES_DIR = os.getcwd() + "/training_images/"
 
-TEST_IMAGES_DIR = os.getcwd() + "/test_images/"
+TEST_IMAGES_DIR =  "C:/Users/manfe/Desktop/buttonpython/imagenes/" ##os.getcwd() + "/test_images/"
 
 # output .csv file names/locations
 TRAINING_DATA_DIR = os.getcwd() + "/" + "training_data"
 TRAIN_CSV_FILE_LOC = TRAINING_DATA_DIR + "/" + "train_labels.csv"
+EVAL_CSV_FILE_LOC = TRAINING_DATA_DIR + "/" + "eval_labels.csv"
 
 ######################################################## 2.
 
 # training and testing output .tfrecord files
 TRAIN_TFRECORD_FILE_LOC = os.getcwd() + "/training_data/" + "train.tfrecord"
+EVAL_TFRECORD_FILE_LOC = os.getcwd() + "/training_data/" + "eval.tfrecord"
 
 ########################################################## 3.
 # verify that your MODEL_DIR contains these files
@@ -41,8 +43,8 @@ FILES_MODEL_DIR_MUST_CONTAIN = [ "checkpoint" ,
 OUTPUT_DIR = os.getcwd() + "/" + "inference_graph"
 
 ########################################################### 5.
-TEST_IMAGE_DIR = os.getcwd() +  "/test_images"
-FROZEN_INFERENCE_GRAPH_LOC = os.getcwd() + "/inference_graph/frozen_inference_graph.pb"
+FROZEN_INFERENCE_GRAPH_LOC = "C:/Users/manfe/Desktop/buttonpython/buttonpython/model_configuration/inference_graph/frozen_inference_graph.pb"###os.getcwd() + "/inference_graph/frozen_inference_graph.pb"
 LABELS_LOC = os.getcwd() + "/" + "label_map.pbtxt"
 RESULTS_LOC = os.getcwd() + "/result_images"
+
 
