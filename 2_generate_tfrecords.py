@@ -25,6 +25,12 @@ def main():
         print("successfully created the training TFRectrds, saved to: " + config.TRAIN_TFRECORD_FILE_LOC)
     # end if
 
+    # # write the eval data .tfrecord file
+    evalTfRecordFileWriteSuccessful = writeTfRecordFile(config.EVAL_CSV_FILE_LOC, config.EVAL_TFRECORD_FILE_LOC, config.TEST_IMAGES_DIR)
+    if evalTfRecordFileWriteSuccessful:
+        print("successfully created the eval TFRecords, saved to: " + config.EVAL_TFRECORD_FILE_LOC)
+#    # end if
+
 # end main
 
 #######################################################################################################################
@@ -123,7 +129,7 @@ def createTfExample(singleFileData, path):
         yMins.append(row['ymin'] / height)
         yMaxs.append(row['ymax'] / height)
         classesAsText.append(row['class'].encode('utf8'))
-        classesAsInts.append(classAsTextToClassAsInt(row['class']))
+        classesAsInts.append(classAsTextToClassAsInt(fileName,row['class']))
     # end for
 
     # finally we can calculate and return the TensorFlow Example
@@ -145,7 +151,7 @@ def createTfExample(singleFileData, path):
 # end function
 
 #######################################################################################################################
-def classAsTextToClassAsInt(classAsText):
+def classAsTextToClassAsInt(fileName, classAsText):
 
     # ToDo: If you have more than one classification, add an if statement for each
     # ToDo: i.e. if you have 3 classes, you would have 3 if statements and then the else
@@ -165,16 +171,16 @@ def classAsTextToClassAsInt(classAsText):
         return 6
     elif classAsText == 'Hymenolepis nana':
         return 7
-    elif classAsText == 'Schistosoma mansoni':
-        return 8
     elif classAsText == 'Enterobius vermicularis':
-        return 9
+        return 8
     elif classAsText == 'Amebas':
-        return 10
+        return 9
     elif classAsText == 'Giardia':
-        return 11
+        return 10
     else:
         print("error in class_text_to_int(), row_label could not be identified")
+        print(fileName)
+
         return -1
     # end if
 # end function
