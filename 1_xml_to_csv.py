@@ -57,6 +57,12 @@ def main():
     trainCsvResults.to_csv(config.TRAIN_CSV_FILE_LOC, index=None) 
     print("training xml to .csv conversion successful, saved result to " + config.TRAIN_CSV_FILE_LOC)
 
+    # # convert test xml data to a single .csv file
+    print("converting xml test data . . .")
+    testCsvResults = xml_to_csv(TEST_IMAGES_DIR)
+    testCsvResults.to_csv(config.EVAL_CSV_FILE_LOC, index=None)
+    print("test xml to .csv conversion successful, saved result to " + config.EVAL_CSV_FILE_LOC)
+
 # end main
 
 #######################################################################################################################
