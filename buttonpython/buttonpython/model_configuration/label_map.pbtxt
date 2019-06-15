@@ -1,0 +1,54 @@
+item {
+  id: 1
+  name: 'Trichuris trichura'
+}
+
+item {
+  id: 2
+  name: 'Ascaris lumbricoides'
+}
+
+item {
+  id: 3
+  name: 'Uncinarias'
+}
+
+item {
+  id: 4
+  name: 'Diphyllobotrium latum'
+}
+
+item {
+  id: 5
+  name: 'Taenia'
+}
+
+item {
+  id: 6
+  name: 'Balantidium coli'
+}
+
+item {
+  id: 7
+  name: 'Hymenolepis nana'
+}
+
+item {
+  id: 8
+  name: 'Schistosoma mansoni'
+}
+
+item {
+  id: 9
+  name: 'Enterobius vermicularis'
+}
+
+item {
+  id: 10
+  name: 'Amebas'
+}
+
+item {
+  id: 11
+  name: 'Giardia'
+}

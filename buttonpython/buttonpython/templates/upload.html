@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OBJECT DETECTION | Web Server</title>
+    </head>
+    <h2>Object Detection Web Server</h2>
+    <body>
+        <p>Welcome to the parasite object detection web server. This web server seeks to be the tool you need to detect the presence of parasites in human stool samples. This page is designed to help pharmacists, pharmacy students and people interested in the analysis of this type of samples.</p>
+        <p>The parasites that can be deteceted are:</p>
+        <li>1.Trichuris trichura</li>
+        <li>2. Ascaris lumbricoides</li>
+        <li>3. Uncinarias</li>
+        <li>4. Diphyllobotrium latum</li>
+        <li>5. Taenia</li>
+        <li>6. Balantidium coli</li>
+        <li>7. Hymenolepis nana</li>
+        <li>8. Enterobius vermicularis</li>
+        <li>9. Amebas</li>
+        <li>10. Giardia</li>
+        <p>The usage of the server is simple, but if you are a new user you can follow this steps:</p>
+        <li>1. Press "Examinar..." and select the image of the sample that you want to analyze. This image must be an .jpg image! </li>
+        <li>2. Press "Upload File". This will make the detection over your image, returning the new image with the detection done.</li>
+        <li>3. If you want to save the image, press RIGHT+CLICK and save as.</li>
+        <li></li>
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="document" accept="image/jpeg" >
+        <button type="submit">Upload File</button>
+    </form>
+    {% if url %}
+        <img src="{{ url }}" width="1632" height="918">
+    {% endif %}
+</body>
+</html>
