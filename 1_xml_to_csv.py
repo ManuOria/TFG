@@ -59,7 +59,7 @@ def main():
 
     # # convert test xml data to a single .csv file
     print("converting xml test data . . .")
-    testCsvResults = xml_to_csv(TEST_IMAGES_DIR)
+    testCsvResults = xml_to_csv(config.TEST_IMAGES_DIR)
     testCsvResults.to_csv(config.EVAL_CSV_FILE_LOC, index=None)
     print("test xml to .csv conversion successful, saved result to " + config.EVAL_CSV_FILE_LOC)
 
