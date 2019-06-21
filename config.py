@@ -15,7 +15,7 @@ MODEL_DIR = os.getcwd() + "/" + MODEL + "_2018_01_28"
 # train and test directories
 TRAINING_IMAGES_DIR = os.getcwd() + "/training_images/"
 
-TEST_IMAGES_DIR =  "C:/Users/manfe/Desktop/buttonpython/imagenes/" ##os.getcwd() + "/test_images/"
+TEST_IMAGES_DIR =  os.getcwd() + "/test_images/"
 
 # output .csv file names/locations
 TRAINING_DATA_DIR = os.getcwd() + "/" + "training_data"
@@ -43,7 +43,7 @@ FILES_MODEL_DIR_MUST_CONTAIN = [ "checkpoint" ,
 OUTPUT_DIR = os.getcwd() + "/" + "inference_graph"
 
 ########################################################### 5.
-FROZEN_INFERENCE_GRAPH_LOC = "C:/Users/manfe/Desktop/buttonpython/buttonpython/model_configuration/inference_graph/frozen_inference_graph.pb"###os.getcwd() + "/inference_graph/frozen_inference_graph.pb"
+FROZEN_INFERENCE_GRAPH_LOC = os.getcwd() + "/inference_graph/frozen_inference_graph.pb"
 LABELS_LOC = os.getcwd() + "/" + "label_map.pbtxt"
 RESULTS_LOC = os.getcwd() + "/result_images"
 
